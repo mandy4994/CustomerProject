@@ -64,6 +64,7 @@ namespace CustomerProject.Controllers
         public IActionResult TopFiveOldestCustomers()
         {
             var customers = _repository.GetAllCustomers()
+                                        .Where(c => c.DateOfBirth != null)
                                         .OrderBy(c => c.DateOfBirth)
                                         .Take(5)
                                         .OrderBy(c => c.LastName);

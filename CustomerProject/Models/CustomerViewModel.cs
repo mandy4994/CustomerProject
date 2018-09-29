@@ -18,8 +18,7 @@ namespace CustomerProject.Models
         public string Email { get; set; }
 
         [Display(Name = "Date of Birth")]
-        [DisplayFormat(DataFormatString = @"{0:dd\/MM\/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         public string CustCode { get; set; }
     }
