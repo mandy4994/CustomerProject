@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CustomerProject</title>
-
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -27,6 +26,16 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">CustomerProject</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a asp-controller="Home" asp-action="TopFiveOldestCustomers" class="navbar-nav">Top 5 Oldest Customers</a>
+                    </li>
+                    <li>
+                        <a asp-controller="Home" asp-action="CustomersList" class="navbar-nav">All Customers</a>
+                    </li>
+                </ul>
             </div>
 
         </div>
@@ -61,5 +70,6 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
 </body>
 </html>

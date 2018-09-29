@@ -7,7 +7,7 @@ namespace CustomerProject.Data
 {
     public interface ICustomerRepository
     {
-        void AddCustomer(Customer customer);
+        Task<int> AddCustomerAsync(Customer customer);
         IEnumerable<Customer> GetAllCustomers();
     }
 }

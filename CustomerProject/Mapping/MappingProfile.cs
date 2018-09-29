@@ -9,6 +9,12 @@ namespace CustomerProject.Mapping
         public MappingProfile()
         {
             CreateMap<Customer, CustomerViewModel>();
+            CreateMap<CustomerViewModel, Customer>()
+                .ForMember(
+                dest => dest.CustCode, opt => opt.MapFrom(
+                    vm => (vm.FirstName + vm.LastName + vm.DateOfBirth.ToString("yyyyMMdd")).ToLower()
+                    )
+                    );
         }
     }
 }

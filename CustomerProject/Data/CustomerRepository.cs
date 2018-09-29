@@ -13,9 +13,11 @@ namespace CustomerProject.Data
         {
             _context = context;
         }
-        public void AddCustomer(Customer customer)
+        public async Task<int> AddCustomerAsync(Customer customer)
         {
-            throw new NotImplementedException();
+            _context.Customers.Add(customer);
+            var recordsAffected = await _context.SaveChangesAsync();
+            return recordsAffected;
         }
 
         public IEnumerable<Customer> GetAllCustomers()
@@ -23,5 +25,6 @@ namespace CustomerProject.Data
             var customers = _context.Customers.ToList();
             return customers;
         }
+
     }
 }

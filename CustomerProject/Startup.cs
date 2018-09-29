@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using CustomerProject.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -33,7 +27,7 @@ namespace CustomerProject
             });
             services.AddAutoMapper();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddNToastNotifyToastr();
            
         }
 
@@ -54,6 +48,7 @@ namespace CustomerProject
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseNToastNotify();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

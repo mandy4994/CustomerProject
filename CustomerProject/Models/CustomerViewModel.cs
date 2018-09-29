@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CustomerProject.Models
 {
@@ -23,5 +20,7 @@ namespace CustomerProject.Models
         [Display(Name = "Date of Birth")]
         [DisplayFormat(DataFormatString = @"{0:dd\/MM\/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
+
+        public string CustCode { get; set; }
     }
 }
