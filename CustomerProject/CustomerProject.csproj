@@ -13,4 +13,8 @@
     <PackageReference Include="NToastNotify" Version="5.0.8" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Customer.Data\Customer.Data.csproj" />
+  </ItemGroup>
+
 </Project>

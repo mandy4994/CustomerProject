@@ -69,6 +69,8 @@ namespace CustomerProject.Controllers
             return RedirectToAction(nameof(CustomersListAsync));
         }
 
+        // The following action returns the CustomersListAsyncView, but it can be made to return
+        // its own view if it needs to be different from the shared CustomersListAsyncView
         public async Task<IActionResult> TopFiveOldestCustomersAsync()
         {
             var customers = await _repository.GetTop5oldestCustomers();
