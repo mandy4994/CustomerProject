@@ -1,11 +1,10 @@
 ﻿using CustomerProject.Data;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using System.Linq;
+using FluentAssertions;
 
 namespace CustomerProject.Tests
 {
@@ -14,12 +13,10 @@ namespace CustomerProject.Tests
     {
         private ICustomerRepository _repository;
 
-        public RepositoryTests()
-        {            
-        }
         [Fact]
         public async Task AddCustomerAsync_AddsCustomerToDatabaseAsync()
         {
+            // Arrange
             _repository = new CustomerRepository(GetInMemoryCustomerContext());
 
             var customer = new Customer
@@ -31,10 +28,46 @@ namespace CustomerProject.Tests
                 CustCode = "testcustomer19910102"
             };
 
+            // Act
             var result = await _repository.AddCustomerAsync(customer).ConfigureAwait(false);
             var totalCustomers = await _repository.GetAllCustomers().ConfigureAwait(false);
 
+            // Assert
             Assert.Single(totalCustomers);
+        }
+
+        [Fact]
+        public async Task GivenCustomersExistInDb_WhenGetAllCustomersCalled_ReturnsAllCustomers()
+        {
+            // Arrange
+            var context = GetInMemoryCustomerContext();
+            await context.SeedAsync();
+            _repository = new CustomerRepository(context);
+            var expected = TestCustomerData.GetSampleCustomerData().ToList();
+
+            // Act
+            var result = await _repository.GetAllCustomers();
+
+            // Assert
+            Assert.Equal(7, result.Count);
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public async Task GivenCustomersExistInDb_WhenGetTop5OldestCustomersCalled_ReturnsCorrectResult()
+        {
+            // Arrange
+            var context = GetInMemoryCustomerContext();
+            await context.SeedAsync();
+            _repository = new CustomerRepository(context);
+            var expected = TestCustomerData.GetSampleCustomerData().Take(5).ToList();
+
+            // Act
+            var result = await _repository.GetTop5oldestCustomers();
+
+            // Assert
+            Assert.Equal(5, result.Count);
+            result.Should().BeEquivalentTo(expected);
         }
 
         private CustomerContext GetInMemoryCustomerContext()
@@ -47,11 +80,6 @@ namespace CustomerProject.Tests
             customerDataContext.Database.EnsureDeleted();
             customerDataContext.Database.EnsureCreated();
             return customerDataContext;
-        }
-
-        private void SeedDatabase(CustomerContext context)
-        {
-            //context.AddRange()
         }
     }
 }
