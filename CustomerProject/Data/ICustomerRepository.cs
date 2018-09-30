@@ -8,6 +8,7 @@ namespace CustomerProject.Data
     public interface ICustomerRepository
     {
         Task<int> AddCustomerAsync(Customer customer);
-        IEnumerable<Customer> GetAllCustomers();
+        Task<List<Customer>> GetAllCustomers();
+        Task<List<Customer>> GetTop5oldestCustomers();
     }
 }

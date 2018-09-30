@@ -40,7 +40,7 @@ namespace CustomerProject
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Customer/Error");
                 app.UseHsts();
             }
 
@@ -53,7 +53,7 @@ namespace CustomerProject
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Customer}/{action=Index}/{id?}");
             });
         }
     }

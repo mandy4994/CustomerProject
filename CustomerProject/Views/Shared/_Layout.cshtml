@@ -25,15 +25,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">CustomerProject</a>
+                <a asp-area="" asp-controller="Customer" asp-action="Index" class="navbar-brand">CustomerProject</a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a asp-controller="Home" asp-action="TopFiveOldestCustomers" class="navbar-nav">Top 5 Oldest Customers</a>
+                        <a asp-controller="Customer" asp-action="TopFiveOldestCustomersAsync" class="navbar-nav">Top 5 Oldest Customers</a>
                     </li>
                     <li>
-                        <a asp-controller="Home" asp-action="CustomersList" class="navbar-nav">All Customers</a>
+                        <a asp-controller="Customer" asp-action="CustomersListAsync" class="navbar-nav">All Customers</a>
                     </li>
                 </ul>
             </div>

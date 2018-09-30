@@ -10,6 +10,7 @@ namespace CustomerProject.Mapping
         {
             CreateMap<Customer, CustomerViewModel>();
             CreateMap<CustomerViewModel, Customer>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(
                             dest => dest.CustCode, opt => opt.ResolveUsing(vm =>
                             {

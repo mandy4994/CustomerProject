@@ -5,6 +5,7 @@ namespace CustomerProject.Data
 {
     public class Customer
     {
+        [Key]
         [Required]
         public int Id { get; set; }
         [Required]

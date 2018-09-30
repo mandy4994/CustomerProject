@@ -10,13 +10,21 @@ using NToastNotify;
 
 namespace CustomerProject.Controllers
 {
-    public class HomeController : Controller
+    public class CustomerController : Controller
     {
+        private const string AllCustomersViewBagHeading = "All Customers";
+        private const string Top5CustomersViewBagHeading = "Top Five Oldest Customers";
+        private const string ErrorToast = "Oops! something went wrong";
+        private const string CustomerAddedToast = "Customer Added";
         private readonly ICustomerRepository _repository;
         private readonly IMapper _mapper;
         private readonly IToastNotification _toastNotification;
 
-        public HomeController(ICustomerRepository repository, IMapper mapper, IToastNotification toastNotification)
+        public CustomerController(
+            ICustomerRepository repository,
+            IMapper mapper,
+            IToastNotification toastNotification
+            )
         {
             _repository = repository;
             _mapper = mapper;
@@ -27,11 +35,11 @@ namespace CustomerProject.Controllers
             return View();
         }
 
-        public IActionResult CustomersList(string heading)
+        public async Task<IActionResult> CustomersListAsync()
         {
-            var customers = _repository.GetAllCustomers();
+            var customers = await _repository.GetAllCustomers();
             var customersVM = _mapper.Map<IEnumerable<Customer>, IEnumerable<CustomerViewModel>>(customers);
-            ViewData["Heading"] = "All Customers";
+            ViewData["Heading"] = AllCustomersViewBagHeading;
             return View(customersVM);
         }
 
@@ -48,30 +56,26 @@ namespace CustomerProject.Controllers
                 recordsAffected = await _repository.AddCustomerAsync(customerEntity);
                 if (recordsAffected == 0)
                 {
-                    _toastNotification.AddErrorToastMessage("Oops! something went wrong");
+                    _toastNotification.AddErrorToastMessage(ErrorToast);
                     return RedirectToAction(nameof(Index));
                 }
             }
             catch (Exception)
             {
-                _toastNotification.AddErrorToastMessage("Oops! something went wrong");
+                _toastNotification.AddErrorToastMessage(ErrorToast);
                 return RedirectToAction(nameof(Index));
             }
-            _toastNotification.AddSuccessToastMessage("Customer Added");
-            return RedirectToAction("CustomersList");
+            _toastNotification.AddSuccessToastMessage(CustomerAddedToast);
+            return RedirectToAction(nameof(CustomersListAsync));
         }
 
-        public IActionResult TopFiveOldestCustomers()
+        public async Task<IActionResult> TopFiveOldestCustomersAsync()
         {
-            var customers = _repository.GetAllCustomers()
-                                        .Where(c => c.DateOfBirth != null)
-                                        .OrderBy(c => c.DateOfBirth)
-                                        .Take(5)
-                                        .OrderBy(c => c.LastName);
+            var customers = await _repository.GetTop5oldestCustomers();
             var customersVM = _mapper.Map<IEnumerable<Customer>, IEnumerable<CustomerViewModel>>(customers);
 
-            var customersListView = View(nameof(CustomersList), customersVM);
-            customersListView.ViewData["Heading"] = "Top Five Oldest Customers";
+            var customersListView = View(nameof(CustomersListAsync), customersVM);
+            customersListView.ViewData["Heading"] = Top5CustomersViewBagHeading;
             return customersListView;
         }
 
