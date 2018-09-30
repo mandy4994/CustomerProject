@@ -13,6 +13,8 @@ namespace CustomerProject.Controllers
 {
     public class CustomerController : Controller
     {
+        // Following strings can be made a part of configuration if its required 
+        // to have different strings in different environments
         private const string AllCustomersViewBagHeading = "All Customers";
         private const string Top5CustomersViewBagHeading = "Top Five Oldest Customers";
         private const string ErrorToast = "Oops! something went wrong";

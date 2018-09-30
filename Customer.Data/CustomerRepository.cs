@@ -10,6 +10,7 @@ namespace CustomerProject.Data
     {
         private readonly CustomerContext _context;
 
+        // TODO: Include try catch in the repository methods and log errors (same as in controller)
         public CustomerRepository(CustomerContext context)
         {
             _context = context;
