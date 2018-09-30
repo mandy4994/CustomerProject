@@ -38,7 +38,7 @@ namespace CustomerProject.Controllers
         public async Task<IActionResult> CustomersListAsync()
         {
             var customers = await _repository.GetAllCustomers();
-            var customersVM = _mapper.Map<IEnumerable<Customer>, IEnumerable<CustomerViewModel>>(customers);
+            var customersVM = _mapper.Map<IEnumerable<Customer>, IEnumerable<CustomerListViewModel>>(customers);
             ViewData["Heading"] = AllCustomersViewBagHeading;
             return View(customersVM);
         }
@@ -74,7 +74,7 @@ namespace CustomerProject.Controllers
         public async Task<IActionResult> TopFiveOldestCustomersAsync()
         {
             var customers = await _repository.GetTop5oldestCustomers();
-            var customersVM = _mapper.Map<IEnumerable<Customer>, IEnumerable<CustomerViewModel>>(customers);
+            var customersVM = _mapper.Map<IEnumerable<Customer>, IEnumerable<CustomerListViewModel>>(customers);
 
             var customersListView = View(nameof(CustomersListAsync), customersVM);
             customersListView.ViewData["Heading"] = Top5CustomersViewBagHeading;

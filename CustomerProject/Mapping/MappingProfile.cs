@@ -8,7 +8,8 @@ namespace CustomerProject.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<Customer, CustomerViewModel>();
+            CreateMap<Customer, CustomerListViewModel>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(c => c.FirstName + " " + c.LastName));
             CreateMap<CustomerViewModel, Customer>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(
