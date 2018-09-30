@@ -7,6 +7,7 @@ using CustomerProject.Models;
 using CustomerProject.Data;
 using AutoMapper;
 using NToastNotify;
+using Microsoft.Extensions.Logging;
 
 namespace CustomerProject.Controllers
 {
@@ -19,16 +20,19 @@ namespace CustomerProject.Controllers
         private readonly ICustomerRepository _repository;
         private readonly IMapper _mapper;
         private readonly IToastNotification _toastNotification;
+        private readonly ILogger<CustomerController> _logger;
 
         public CustomerController(
             ICustomerRepository repository,
             IMapper mapper,
-            IToastNotification toastNotification
+            IToastNotification toastNotification,
+            ILogger<CustomerController> logger
             )
         {
             _repository = repository;
             _mapper = mapper;
             _toastNotification = toastNotification;
+            _logger = logger;
         }
         public IActionResult Index()
         {
@@ -37,7 +41,18 @@ namespace CustomerProject.Controllers
 
         public async Task<IActionResult> CustomersListAsync()
         {
-            var customers = await _repository.GetAllCustomers();
+            _logger.LogInformation("Getting all Customers");
+            List<Customer> customers = null;
+            try
+            {
+                customers = await _repository.GetAllCustomers();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error occured while getting all customers - {ex}");
+                _toastNotification.AddErrorToastMessage(ErrorToast);
+                return RedirectToAction(nameof(Index));
+            }
             var customersVM = _mapper.Map<IEnumerable<Customer>, IEnumerable<CustomerListViewModel>>(customers);
             ViewData["Heading"] = AllCustomersViewBagHeading;
             return View(customersVM);
@@ -47,21 +62,24 @@ namespace CustomerProject.Controllers
         {
             if (!ModelState.IsValid)
             {
+                _logger.LogError("Cannot add customer - invalid details");
                 return View(nameof(Index));
             }
             int recordsAffected = 0;
             try
             {
                 var customerEntity = _mapper.Map<CustomerViewModel, Customer>(customer);
-                recordsAffected = await _repository.AddCustomerAsync(customerEntity);
-                if (recordsAffected == 0)
-                {
-                    _toastNotification.AddErrorToastMessage(ErrorToast);
-                    return RedirectToAction(nameof(Index));
-                }
+                recordsAffected = await _repository.AddCustomerAsync(customerEntity);          
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError($"Error occured while saving customer - {ex} ");
+                _toastNotification.AddErrorToastMessage(ErrorToast);
+                return RedirectToAction(nameof(Index));
+            }
+            if (recordsAffected == 0)
+            {
+                _logger.LogError("No customer was added");
                 _toastNotification.AddErrorToastMessage(ErrorToast);
                 return RedirectToAction(nameof(Index));
             }
@@ -73,7 +91,17 @@ namespace CustomerProject.Controllers
         // its own view if it needs to be different from the shared CustomersListAsyncView
         public async Task<IActionResult> TopFiveOldestCustomersAsync()
         {
-            var customers = await _repository.GetTop5oldestCustomers();
+            List<Customer> customers = null;
+            try
+            {
+                customers = await _repository.GetTop5oldestCustomers();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error occured while getting top 5 oldest customers - {ex}");
+                _toastNotification.AddErrorToastMessage(ErrorToast);
+                return RedirectToAction(nameof(Index));
+            }
             var customersVM = _mapper.Map<IEnumerable<Customer>, IEnumerable<CustomerListViewModel>>(customers);
 
             var customersListView = View(nameof(CustomersListAsync), customersVM);
