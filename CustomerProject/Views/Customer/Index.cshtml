@@ -12,34 +12,34 @@
                 <div class="form-group">
                     <label asp-for="FirstName" class="col-md-4 control-label"></label>
                     <div class="col-md-8">
-                        <input asp-for="FirstName" class="form-control" />
+                        <input id="FirstNameInput" asp-for="FirstName" class="form-control" />
                         <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label asp-for="LastName" class="col-md-4 control-label"></label>
                     <div class="col-md-8">
-                        <input asp-for="LastName" class="form-control" />
+                        <input id="LastNameInput" asp-for="LastName" class="form-control" />
                         <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label asp-for="Email" class="col-md-4 control-label"></label>
                     <div class="col-md-8">
-                        <input type="email" asp-for="Email" class="form-control" />
+                        <input id="EmailInput" type="email" asp-for="Email" class="form-control" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label asp-for="DateOfBirth" class="col-md-4 control-label"></label>
                     <div class="col-md-8">
-                        <input type="date" asp-for="DateOfBirth" class="form-control" />
+                        <input id="DobInput" type="date" asp-for="DateOfBirth" class="form-control" />
                         <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Add Customer" class="btn btn-default" />
+                        <input id="SubmitBtn" type="submit" value="Add Customer" class="btn btn-default" />
                     </div>
                 </div>
             </div>
