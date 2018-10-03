@@ -66,6 +66,7 @@ namespace CustomerProject.End2EndTests.Steps
             _customerListPage = new CustomersListPageObjectModel(webDriver);
             numberOfCustomersAfter = _customerListPage.GetNumberOfCustomers();
             numberOfCustomersAfter.Should().Be(numberOfCustomersBefore + 1);
+            // TODO: check for last row record
         }
     }
 }
