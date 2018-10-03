@@ -9,6 +9,8 @@
 * Used Xunits and Fluent Assertions at some places for testing. 
 * Tests include Controller test, Repository tests (using In Memory database), automapper's mapping tests
 * Used NToastNotify for showing toast notifications for successful saving or faliure to save to the database
+* Similar End to End Tests can be written to check the top 5 oldest customer scenarios
+* Haven't included unit testing yet for try catch cases in controllers
 
 **Assumption:**
 Since Date of Birth field is not required, then for CustCode, if DOB is not present, CustCode will not include dob. e.g. It will be like firstnamelastname
