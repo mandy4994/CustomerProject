@@ -7,7 +7,7 @@
 * I could have used Angular components instead of Views, but due to time constraints and limited requirements, I sticked with asp.net Views
 * Separated the data access layer from the web project to some extent, by creating a new project Customers.Data
 * Used Xunits and Fluent Assertions at some places for testing. 
-* Tests include Controller test, Repository tests (using In Memory database), automapper's mapping tests
+* Tests include Controller test, Repository tests (using In Memory database), automapper's mapping tests, and an End to End test scenario
 * Used NToastNotify for showing toast notifications for successful saving or faliure to save to the database
 * Similar End to End Tests can be written to check the top 5 oldest customer scenarios
 * Haven't included unit testing yet for try catch cases in controllers
