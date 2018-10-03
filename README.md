@@ -12,3 +12,9 @@
 
 **Assumption:**
 Since Date of Birth field is not required, then for CustCode, if DOB is not present, CustCode will not include dob. e.g. It will be like firstnamelastname
+
+## Steps to run:
+1. Download or clone the repository
+2. Open up command line and cd to the CustomerProject/CustomerProject folder
+3. Type "dotnet ef database update" to create the sql server database (You can change the connection string in the appsettings.json file)
+4. Then enter "dotnet run". It should spin up the browser running on localhost, (if it doesn't, navigate to the localhost url in the command line)
